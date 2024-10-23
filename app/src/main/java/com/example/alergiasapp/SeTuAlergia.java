@@ -32,40 +32,18 @@ public class SeTuAlergia extends AppCompatActivity {
         llAlergiasSeleccionadas = findViewById(R.id.llAlergiasSeleccionadas);
         spinnerAlergias = findViewById(R.id.spinnerAlergias);
 
-        // Estas variables pueden ser locales ya que solo se usan en onCreate
-        ArrayList<String> alergiasFullList = new ArrayList<>();
-        alergiasFullList.add("Seleccionar alergia");
-        alergiasFullList.add("Cereales con Gluten");
-        alergiasFullList.add("Crustáceos y sus productos");
-        alergiasFullList.add("Huevos y sus productos");
-        alergiasFullList.add("Pescados y productos pesqueros");
-        alergiasFullList.add("Maní, soya y sus productos");
-        alergiasFullList.add("Leche y productos lácteos");
-        alergiasFullList.add("Nueces y productos derivados");
-        alergiasFullList.add("Sulfito en concentraciones > 10mg/Kg");
-
         // Configura el Spinner con un adaptador personalizado
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, alergiasFullList) {
-            @Override
-            public int getCount() {
-                // Excluye la última opción ("Seleccionar alergia") de la lista desplegable
-                return super.getCount() - 1;
-            }
-        };
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> spinnerAdapter = createSpinnerAdapter();
         spinnerAlergias.setAdapter(spinnerAdapter);
 
         // Muestra la última opción como predeterminada en la vista inicial
-        spinnerAlergias.setSelection(alergiasFullList.size() - 1);
+        spinnerAlergias.setSelection(spinnerAdapter.getCount());
 
         // Configura el botón para desplegar el Spinner
-        botonSeleccionarAlergia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Muestra el Spinner cuando se hace clic en el botón
-                spinnerAlergias.setVisibility(View.VISIBLE);
-                spinnerAlergias.performClick();
-            }
+        botonSeleccionarAlergia.setOnClickListener(view -> {
+            // Muestra el Spinner cuando se hace clic en el botón
+            spinnerAlergias.setVisibility(View.VISIBLE);
+            spinnerAlergias.performClick();
         });
 
         spinnerAlergias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -77,7 +55,7 @@ public class SeTuAlergia extends AppCompatActivity {
                 }
 
                 String alergiaSeleccionada = (String) parent.getItemAtPosition(position);
-                if (!alergiasSeleccionadas.contains(alergiaSeleccionada) && !alergiaSeleccionada.equals("Seleccionar alergia")) {
+                if (!alergiasSeleccionadas.contains(alergiaSeleccionada) && !alergiaSeleccionada.equals(getString(R.string.stSeleccionarAlergias))) {
                     alergiasSeleccionadas.add(alergiaSeleccionada);
                     actualizarListaDeAlergias();
                 }
@@ -91,31 +69,47 @@ public class SeTuAlergia extends AppCompatActivity {
             }
         });
 
-        botonContinuar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Random random = new Random();
-                int randomActivity = random.nextInt(3);
-                Intent intent;
+        botonContinuar.setOnClickListener(view -> {
+            Random random = new Random();
+            int randomActivity = random.nextInt(3);
+            Intent intent;
 
-                switch (randomActivity) {
-                    case 0:
-                        intent = new Intent(SeTuAlergia.this, BaseDatosNo.class);
-                        break;
-                    case 1:
-                        intent = new Intent(SeTuAlergia.this, NoAlergia.class);
-                        break;
-                    case 2:
-                        intent = new Intent(SeTuAlergia.this, SiAlergia.class);
-                        break;
-                    default:
-                        intent = new Intent(SeTuAlergia.this, BaseDatosNo.class);
-                        break;
-                }
-
-                startActivity(intent);
+            switch (randomActivity) {
+                case 0:
+                    intent = new Intent(SeTuAlergia.this, BaseDatosNo.class);
+                    break;
+                case 1:
+                    intent = new Intent(SeTuAlergia.this, NoAlergia.class);
+                    break;
+                case 2:
+                default:
+                    intent = new Intent(SeTuAlergia.this, SiAlergia.class);
+                    break;
             }
+
+            startActivity(intent);
         });
+    }
+
+    private ArrayAdapter<String> createSpinnerAdapter() {
+        ArrayList<String> alergiasFullList = new ArrayList<>();
+        alergiasFullList.add(getString(R.string.stSeleccionarAlergias));
+        alergiasFullList.add(getString(R.string.stGluten));
+        alergiasFullList.add(getString(R.string.stCrustaceos));
+        alergiasFullList.add(getString(R.string.stHuevos));
+        alergiasFullList.add(getString(R.string.stPescados));
+        alergiasFullList.add(getString(R.string.stMani));
+        alergiasFullList.add(getString(R.string.stLeche));
+        alergiasFullList.add(getString(R.string.stNueces));
+        alergiasFullList.add(getString(R.string.stSulfito));
+
+        return new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, alergiasFullList) {
+            @Override
+            public int getCount() {
+                // Excluye la última opción ("Seleccionar alergia") de la lista desplegable
+                return super.getCount() - 1;
+            }
+        };
     }
 
     private void actualizarListaDeAlergias() {
@@ -134,13 +128,10 @@ public class SeTuAlergia extends AppCompatActivity {
             textoAlergia.setPadding(16, 0, 16, 0);
 
             Button botonEliminar = new Button(this);
-            botonEliminar.setText("Eliminar");
-            botonEliminar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alergiasSeleccionadas.remove(alergia);
-                    actualizarListaDeAlergias();
-                }
+            botonEliminar.setText(R.string.stEliminar);
+            botonEliminar.setOnClickListener(view -> {
+                alergiasSeleccionadas.remove(alergia);
+                actualizarListaDeAlergias();
             });
 
             itemLayout.addView(textoAlergia);

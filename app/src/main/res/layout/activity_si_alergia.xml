@@ -24,7 +24,7 @@
         android:textSize="24sp"
         android:gravity="center"
         android:fontFamily="@font/dmsans_normal"
-        android:textColor="@color/foreground"
+        android:textColor="@color/btnText"
         android:padding="75dp"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"/>

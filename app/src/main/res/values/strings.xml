@@ -1,5 +1,6 @@
+<!-- app/res/values/strings.xml -->
+
 <resources>
-    <string name="app_name">pruebaApp</string>
     <string name="stSeTuAlergia">Sé tu alergia</string>
     <string name="stSeleccionarAlergias">Selecciona una alergia</string>
     <string name="stGluten">Cereales con Gluten</string>
@@ -15,6 +16,13 @@
     <string name="stAlergico">No eres alérgico!!!</string>
     <string name="stEresAlergico">Cuidado este alimento puede generarte una reacción alérgica!!!</string>
     <string name="stBDnotFound">El alimento no se encuentra registrado en nuestra base de datos</string>
-    <string name="desc_imagen_no_alergico">Imagen indicando que no eres alérgico</string>
-
+    <string name="stDescImagenNoAlergico">Imagen indicando que no eres alérgico</string>
+    <string name="stAppName">AlergiasApp</string>
+    <string name="stHintNombreProducto">Nombre del Producto</string>
+    <string name="stHintCodigoBarras">Código de Barras</string>
+    <string name="stHintIngredientes">Ingredientes</string>
+    <string name="stAgregarProducto">Agregar Producto</string>
+    <string name="stAgregarMasCampos">Agregar Más Campos</string>
+    <string name="stGuardarProductos">Guardar Productos</string>
+    <string name="stEliminar">Eliminar</string> <!-- Nueva cadena agregada -->
 </resources>

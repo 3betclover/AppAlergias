@@ -73,6 +73,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/btnBackground"
         android:padding="15dp"
+        android:textColor="@color/btnText2"
         />
 
 </LinearLayout>
